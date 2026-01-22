@@ -297,12 +297,23 @@ fn main() {
     let name = String::from("John");
     println!("Length: {}", name.len()); // 4
 
+    // ============================================
+    // OWNERSHIP AND BORROWING
+    // ============================================
+    // Rust's ownership system ensures memory safety without a garbage collector.
+    // When you assign a String to another variable, ownership is moved.
+    // The original variable can no longer be used after the move.
     let a = String::from("Hello");
-    let b = &a;
+    let b = &a; // Borrowing: b references a without taking ownership
 
-    println!("{}", a); //Error: a no longer owns the value
-    println!("{}", b); // Ok: b now owns the value
+    println!("{}", a); // Ok: a still owns the value because we only borrowed it
+    println!("{}", b); // Ok: b is a reference to a
 
+    // ============================================
+    // HASHMAP - KEY-VALUE PAIRS
+    // ============================================
+    // HashMap stores data as key-value pairs for fast lookup.
+    // Use insert() to add entries and [] to access values by key.
     let mut capital_cities = HashMap::new();
     capital_cities.insert("Bangladesh", "Dhaka");
     capital_cities.insert("Japan", "Tokyo");
@@ -310,21 +321,41 @@ fn main() {
     print!("Capital of Bangladesh: {}\n", capital_cities["Bangladesh"]);
     print!("Capital of Japan: {}\n", capital_cities["Japan"]);
 
+    // ============================================
+    // VEC - DYNAMIC ARRAY
+    // ============================================
+    // Vec<T> is a growable array type that stores elements of the same type.
+    // push() adds elements to the end of the vector.
     let mut fruits = vec!["Apple", "Banana", "Mango"];
     fruits.push("Orange");
     println!("Fruits: {:?}", fruits);
 
+    // ============================================
+    // TUPLES - FIXED-SIZE COLLECTIONS
+    // ============================================
+    // Tuples can hold values of different types.
+    // They have a fixed size and cannot grow or shrink.
     let person = ("John", 30, true);
     println!("Person: {:?}", person);
 
+    // ============================================
+    // VECTOR OPERATIONS
+    // ============================================
+    // pop() removes and returns the last element
+    // insert(index, value) inserts a value at the specified index
+    // remove(index) removes and returns the element at the specified index
     let mut fruits = vec!["apple", "banana", "cherry"];
-    fruits.pop();
+    fruits.pop(); // Remove "cherry"
     println!("{:?}", fruits);
-    fruits.insert(0, "mangustine");
+    fruits.insert(0, "mangustine"); // Insert at index 0
     println!("{:?}", fruits);
-    fruits.remove(0);
+    fruits.remove(0); // Remove element at index 0
     println!("{:?}", fruits);
 
+    // ============================================
+    // TUPLE DESTRUCTURING
+    // ============================================
+    // You can unpack tuple values into separate variables using pattern matching.
     let person = ("Jenny", 45, false);
     let (name, age, active) = person;
 
@@ -332,9 +363,18 @@ fn main() {
     println!("Age: {}", age);
     println!("Active: {}", active);
 
+    // ============================================
+    // FUNCTION CALL WITH TUPLE RETURN
+    // ============================================
+    // Functions can return tuples to return multiple values.
     let user = get_user();
     println!("User: {} ({} years old)", user.0, user.1);
 
+    // ============================================
+    // STRUCTS - CUSTOM DATA TYPES
+    // ============================================
+    // Structs let you create custom data types with named fields.
+    // They group related data together.
     struct Person {
         name: String,
         age: u32,
@@ -345,19 +385,25 @@ fn main() {
         age: 35,
         can_vote: true,
     };
-    user.age = 40;
+    user.age = 40; // Modify struct field (requires mut)
     println!("Name: {}", user.name);
     println!("Age: {}", user.age);
     println!("Can vote? {}", user.can_vote);
 
+    // ============================================
+    // ENUMS - CUSTOM TYPES WITH VARIANTS
+    // ============================================
+    // Enums let you define a type with specific variants.
+    // Variants can hold associated data of different types.
     enum LoginStatus {
-        Success(String),
-        Error(String),
+        Success(String), // Variant with a String payload
+        Error(String),   // Variant with a String payload
     }
 
     let result1 = LoginStatus::Success(String::from("Welcome, John!"));
     let result2 = LoginStatus::Error(String::from("Incorrect password"));
 
+    // Pattern matching on enum variants
     match result1 {
         LoginStatus::Success(message) => println!("Success: {}", message),
         LoginStatus::Error(message) => println!("Error: {}", message),
